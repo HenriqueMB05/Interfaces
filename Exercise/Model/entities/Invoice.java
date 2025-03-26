@@ -1,14 +1,14 @@
 package Exercise.Model.entities;
 
-public class inVoice {
+public class Invoice {
     private Double basicPayment;
     private Double tax;
 
-    public inVoice(){
+    public Invoice(){
 
     }
 
-    public inVoice(Double basicPayment, Double tax) {
+    public Invoice(Double basicPayment, Double tax) {
         this.basicPayment = basicPayment;
         this.tax = tax;
     }

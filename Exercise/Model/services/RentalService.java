@@ -1,7 +1,7 @@
 package Exercise.Model.services;
 
 import Exercise.Model.entities.carRental;
-import Exercise.Model.entities.inVoice;
+import Exercise.Model.entities.Invoice;
 
 import java.time.Duration;
 
@@ -9,9 +9,9 @@ public class RentalService {
     private Double pricePerHour;
     private Double pricePerDay;
 
-    private BrasilTaxService taxService;
+    private TaxService taxService;
 
-    public RentalService(Double pricePerHour, Double pricePerDay, BrasilTaxService taxService) {
+    public RentalService(Double pricePerHour, Double pricePerDay, TaxService taxService) {
         this.pricePerHour = pricePerHour;
         this.pricePerDay = pricePerDay;
         this.taxService = taxService;
@@ -32,6 +32,6 @@ public class RentalService {
         }
 
         double tax = taxService.tax(basicPayment);
-        carrental.setInvoice(new inVoice(basicPayment,tax));
+        carrental.setInvoice(new Invoice(basicPayment,tax));
     }
 }
