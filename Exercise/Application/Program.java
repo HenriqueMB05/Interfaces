@@ -2,6 +2,8 @@ package Exercise.Application;
 
 import Exercise.Model.entities.Vehicle;
 import Exercise.Model.entities.carRental;
+import Exercise.Model.services.BrasilTaxService;
+import Exercise.Model.services.RentalService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +12,7 @@ import java.util.Scanner;
 
 public class Program{
     public static void main(String[] args){
+
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
@@ -22,15 +25,23 @@ public class Program{
         LocalDateTime start = LocalDateTime.parse(sc.nextLine(), fmt);
         System.out.print("Retorno (dd/MM/yyyy hh:mm): ");
         LocalDateTime finish = LocalDateTime.parse(sc.nextLine(), fmt);
-        System.out.print("Entre com o preço por hora: ");
 
         carRental cr = new carRental(start, finish, new Vehicle(carModel));
 
+        System.out.print("Entre com o preço por hora: ");
+        double pricePerHour =sc.nextDouble();
         System.out.print("Entre com o preço por dia: ");
+        double pricePerDay = sc.nextDouble();
+
+        RentalService rentalservice = new RentalService(pricePerHour, pricePerDay, new BrasilTaxService());
+
+        rentalservice.processInvoice(cr);
         System.out.println("FATURA: ");
-        System.out.print("Pagamento básico : ");
-        System.out.print("Imposto: ");
-        System.out.print("Pagamento Total: ");
+        System.out.println("Pagamento básico : "+ cr.getInvoice().getBasicPayment());
+        System.out.println("Imposto: " + cr.getInvoice().getTax());
+        System.out.println("Pagamento Total: "+cr.getInvoice().getTotalPayment());
+
+        BrasilTaxService taxService = new BrasilTaxService();
 
         sc.close();
     }
